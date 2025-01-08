@@ -1,0 +1,19 @@
+- model: device.Category
+  fields:
+    id: 1
+    type: Reference Devices
+
+- model: device.Category
+  fields:
+    id: 11
+    type: SD card
+
+- model: device.Category
+  fields:
+    status_code: 12
+    status: Bluetooth devices
+
+- model: device.Category
+  fields:
+    status_code: 13
+    status: xx

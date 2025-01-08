@@ -1,0 +1,40 @@
+{% extends "admin/change_list.html" %}
+{% load i18n admin_static %}
+
+{% block extrastyle %}{{ block.super }}<link rel="stylesheet" type="text/css" href="{% static "device/css/dashboard.css" %}" />{% endblock %}
+
+{% block coltype %}colMS{% endblock %}
+
+{% block bodyclass %}{{ block.super }} dashboard{% endblock %}
+
+{% block breadcrumbs %}{% endblock %}
+
+
+{% block content %}
+<div id="content-main">
+    <div class="app-{{ app.app_label }} module">
+        <table id="result_list">
+            <thead>
+                <tr class="model-{{ model.object_name|lower }}">
+                    <th scope="col" class="sortable">Project</th>
+                    <th>ID</th>
+                    <th>HW_status</th>
+                    <th scope="col" class="sortable">Now_user</th>
+                </tr>
+            </thead>
+            <tbody>
+            {% for dut in dut_list %}
+            <tr class="model-{{ model.object_name|lower }}">
+                <td>{{ dut.project }}</td>
+    <!--            <td><a href="{{ dut.id }}">{{ dut.id }}</a></td> -->
+                <td>{{ dut.id }}</td>
+                <td>{{ dut.hw_status}}</td>
+                <td>{{ dut.now_user}}</td>
+            </tr>
+            {% endfor %}
+            </tbody>
+        </table>
+    </div>
+</div>
+{% endblock %}
+

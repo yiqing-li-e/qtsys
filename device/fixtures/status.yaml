@@ -1,0 +1,24 @@
+- model: device.Status
+  fields:
+    status_code: 0
+    status: QT Testing
+
+- model: device.Status
+  fields:
+    status_code: 2
+    status: LOAN
+
+- model: device.Status
+  fields:
+    status_code: 9
+    status: LOST
+
+- model: device.Status
+  fields:
+    status_code: 10
+    status: STOCKED
+
+- model: device.Status
+  fields:
+    status_code: 11
+    status: RETURNED TO HQ

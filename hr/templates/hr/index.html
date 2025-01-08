@@ -1,0 +1,45 @@
+{% extends "admin/change_list.html" %}
+{% load i18n admin_static %}
+
+{% block extrastyle %}{{ block.super }}<link rel="stylesheet" type="text/css" href="{% static "hr/css/dashboard.css" %}" />{% endblock %}
+
+{% block coltype %}colMS{% endblock %}
+
+{% block bodyclass %}{{ block.super }} dashboard{% endblock %}
+
+{% block breadcrumbs %}{% endblock %}
+
+
+{% block content %}
+<div id="content-main">
+    <div class="app-{{ app.app_label }} module">
+        <table>
+        <caption>
+            <a href="{{ ot }}" class="section" title="{{ title }}">{{ title }}</a>
+        </caption>
+        <thead>
+            <tr class="model-{{ model.object_name|lower }}">
+                <th scope="col" class="sortable">CREATED BY</th>
+                <th>START</th>
+                <th>END</th>
+                <th>OT DURATION</th>
+                <th scope="col" class="sortable">APPROVED</th>
+            </tr>
+        </thead>
+        {% for ot in ot_list %}
+        <tr class="model-{{ model.object_name|lower }}">
+            <td>{{ ot.created_by }}</td>
+<!--            <td><a href="{{ dut.id }}">{{ dut.id }}</a></td> -->
+            <td>{{ ot.start_time }}</td>
+            <td>{{ ot.end_time}}</td>
+            <td>{{ ot.hours}}</td>
+            <td>{{ ot.approved}}</td>
+        </tr>
+        {% endfor %}
+        </table>
+    </div>
+
+</div>
+{% endblock %}
+
+

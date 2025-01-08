@@ -1,0 +1,114 @@
+{% extends "admin/change_list.html" %}
+{% load i18n admin_static %}
+
+{% block extrastyle %}{{ block.super }}<link rel="stylesheet" type="text/css" href="{% static "device/css/dashboard.css" %}" />{% endblock %}
+
+{% block coltype %}colMS{% endblock %}
+
+{% block bodyclass %}{{ block.super }} dashboard{% endblock %}
+
+{% block breadcrumbs %}{% endblock %}
+
+
+{% block content %}
+<div id="content-main">
+    <div class="app-{{ app.app_label }} module">
+        <table>
+        <caption>
+            <a href="{{ device }}" class="section" title="DUT List">DUT</a>
+        </caption>
+        <thead>
+            <tr class="model-{{ model.object_name|lower }}">
+                <th scope="col" class="sortable">Project</th>
+                <th>ID</th>
+                <th>HW_status</th>
+                <th scope="col" class="sortable">Now_user</th>
+            </tr>
+        </thead>
+        {% for dut in dut_list %}
+        <tr class="model-{{ model.object_name|lower }}">
+            <td>{{ dut.project }}</td>
+<!--            <td><a href="{{ dut.id }}">{{ dut.id }}</a></td> -->
+            <td>{{ dut.device_id }}</td>
+            <td>{{ dut.hw_status}}</td>
+            <td>{{ dut.now_user}}</td>
+        </tr>
+        {% endfor %}
+        </table>
+    </div>
+    <div class="app-{{ app.app_label }} module" >
+        <table>
+        <caption>
+            <a href="{{ device }}" class="section" title="Other Devices">Other Devices</a>
+        </caption>
+        <tr class="model-{{ model.object_name|lower }}">
+            <th>Device</th>
+            <th>Brand</th>
+            <th>Model</th>
+            <th>Now_user</th>
+        </tr>
+        {% for d in device_list %}
+        <tr class="model-{{ model.object_name|lower }}">
+            <td>{{ d.category }}</td>
+            <td>{{ d.brand }}</td>
+            <td>{{ d.model }}</td>
+            <td>{{ d.now_user}}</td>
+        </tr>
+        {% endfor %}
+        </table>
+    </div>
+    <div class="app-{{ app.app_label }} module" >
+        <table>
+        <caption>
+            <a href="{{ device }}" class="section" title="SIM Cards">Testing SIM Cards</a>
+        </caption>
+        <tr class="model-{{ model.object_name|lower }}">
+            <th>MSISDN</th>
+            <th>OPERATOR</th>
+            <th>NOW_USER</th>
+            <th>LAST_RELOAD</th>
+        </tr>
+        {% for d in sim_list %}
+        <tr class="model-{{ model.object_name|lower }}">
+            <td>{{ d.MSISDN }}</td>
+            <td>{{ d.operator }}</td>
+            <td>{{ d.now_user }}</td>
+            <td>{{ d.last_reload}}</td>
+        </tr>
+        {% endfor %}
+        </table>
+    </div>
+</div>
+{% endblock %}
+
+{% block sidebar %}
+<div id="content-related">
+    <div class="module" id="recent-actions-module">
+        <h2>{% trans 'Recent Actions' %}</h2>
+        <h3>{% trans 'My Actions' %}</h3>
+            {% load log %}
+            {% get_admin_log 10 as admin_log for_user user %}
+            {% if not admin_log %}
+            <p>{% trans 'None available' %}</p>
+            {% else %}
+            <ul class="actionlist">
+            {% for entry in admin_log %}
+            <li class="{% if entry.is_addition %}addlink{% endif %}{% if entry.is_change %}changelink{% endif %}{% if entry.is_deletion %}deletelink{% endif %}">
+                {% if entry.is_deletion or not entry.get_admin_url %}
+                    {{ entry.object_repr }}
+                {% else %}
+                    <a href="{{ entry.get_admin_url }}">{{ entry.object_repr }}</a>
+                {% endif %}
+                <br/>
+                {% if entry.content_type %}
+                    <span class="mini quiet">{% filter capfirst %}{{ entry.content_type }}{% endfilter %}</span>
+                {% else %}
+                    <span class="mini quiet">{% trans 'Unknown content' %}</span>
+                {% endif %}
+            </li>
+            {% endfor %}
+            </ul>
+            {% endif %}
+    </div>
+</div>
+{% endblock %}

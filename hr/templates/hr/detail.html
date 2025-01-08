@@ -1,0 +1,45 @@
+{% extends "admin/base_site.html" %}
+{% load i18n admin_static %}
+
+{% block extrastyle %}{{ block.super }}<link rel="stylesheet" type="text/css" href="{% static "admin/css/dashboard.css" %}" />{% endblock %}
+
+{% block coltype %}colMS{% endblock %}
+
+{% block bodyclass %}{{ block.super }} dashboard{% endblock %}
+
+{% block breadcrumbs %}{% endblock %}
+
+{% block content %}
+
+<h2>{{ mt_type }}: {{ mt }}</h2>
+{% if mt_type == 'DUT' %}
+<table>
+    <tr><td>ID</td><td>{{ mt.id }}</td></tr>
+    <tr><td>NOW USER</td><td>{{ mt.now_user }}</td></tr>
+    <tr><td>STATUS</td><td>{{ mt.status }}</td></tr>
+    <tr><td>REMARK</td><td>{{ mt.remarks }}</td></tr>
+</table>
+
+{% elif mt_type == 'Device' %}
+<table>
+    <tr><th></th><th></th><th></th></tr>
+    <tr><td></td><td></td><td></td></tr>
+</table>
+
+{% elif mt_type == 'SIM' %}
+<table>
+    <tr><td>NUMBER</td><td>{{ mt.line }}</td></tr>
+    <tr><td>OPERATOR</td><td>{{ mt.operator }}</td></tr>
+    <tr><td>REGISTER</td><td>{{ mt.register_name }}</td></tr>
+    <tr><td>REMARK</td><td>{{ mt.remark }}</td></tr>
+    <tr><td>NOW USER</td><td>{{ mt.now_user }}</td></tr>
+</table>
+<table border="1">
+    <tr><th>DATE</th><th>AMOUNT</th><th>Reloaded by</th></tr>
+    {% for r in mt.reloadrecord_set.all%}
+    <tr><td>{{ r.date }}</td><td>{{ r.amount }}</td><td>{{ r.person }}</td></tr>
+    {% endfor %}
+</table>
+{% endif %}
+
+{% endblock %}
